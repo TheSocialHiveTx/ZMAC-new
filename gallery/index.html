@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Gallery | ZMAC Construction</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .modern-gradient {
+      background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: #f0f0f0;
+    }
+    .gallery-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    .gallery-item img {
+      transition: transform 0.5s ease;
+      will-change: transform;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+    .project-section {
+      opacity: 0;
+      animation: fadeIn 0.6s ease forwards;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    .hidden-section {
+      display: none;
+    }
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox.active {
+      display: flex;
+    }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandPrimary: '#000000',
+            primaryAccent: '#FFD700',
+            primaryAccentHover: '#F2CC00',
+            softGray: '#F5F5F7',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="min-h-screen bg-white text-black selection:bg-primaryAccent selection:text-black">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 w-full z-50 transition-all duration-300 bg-black py-6">
+    <div class="container mx-auto px-6 flex justify-between items-center">
+      <!-- Logo -->
+      <a href="../index.html" class="flex flex-col cursor-pointer group">
+        <img src="../images/ZMAC NO BG.png" alt="ZMAC Construction" class="h-20 w-auto object-contain">
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden lg:flex items-center space-x-8">
+        <a href="../commercial-roofing/" class="font-semibold text-xs uppercase tracking-widest transition-all text-gray-400 hover:text-white">Commercial Roofing</a>
+        <a href="../residential-roofing/" class="font-semibold text-xs uppercase tracking-widest transition-all text-gray-400 hover:text-white">Residential Roofing</a>
+        <a href="../roofing-systems/" class="font-semibold text-xs uppercase tracking-widest transition-all text-gray-400 hover:text-white">Roofing Systems</a>
+        <a href="../storm-damage/" class="font-semibold text-xs uppercase tracking-widest transition-all text-gray-400 hover:text-white">Storm Damage</a>
+        <a href="../about/" class="font-semibold text-xs uppercase tracking-widest transition-all text-gray-400 hover:text-white">About</a>
+        <a href="../gallery/" class="font-semibold text-xs uppercase tracking-widest transition-all text-white">Gallery</a>
+        <a href="../contact/" class="bg-primaryAccent hover:bg-primaryAccentHover text-black px-6 py-3 rounded-full font-bold transition-all">Get a Quote</a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" class="lg:hidden text-white">
+        <i data-lucide="menu" class="w-8 h-8"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="fixed inset-0 bg-black z-40 transform translate-x-full transition-transform duration-300 lg:hidden pt-32 px-6">
+    <nav class="flex flex-col space-y-6">
+      <a href="../commercial-roofing/" class="text-white text-lg font-semibold">Commercial Roofing</a>
+      <a href="../residential-roofing/" class="text-white text-lg font-semibold">Residential Roofing</a>
+      <a href="../roofing-systems/" class="text-white text-lg font-semibold">Roofing Systems</a>
+      <a href="../storm-damage/" class="text-white text-lg font-semibold">Storm Damage</a>
+      <a href="../about/" class="text-white text-lg font-semibold">About</a>
+      <a href="../gallery/" class="text-white text-lg font-semibold">Gallery</a>
+      <a href="../contact/" class="bg-primaryAccent text-black px-6 py-3 rounded-full font-bold inline-block text-center">Get a Quote</a>
+    </nav>
+  </div>
+
+  <!-- HERO -->
+  <section class="relative pt-40 pb-20 bg-black text-white">
+    <div class="container mx-auto px-6">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6">
+          Our <span class="text-primaryAccent">Projects</span>
+        </h1>
+        <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+          Explore our portfolio of completed roofing projects across Colorado
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY SECTIONS -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+
+      <!-- Barks on Broadway Re-Roof -->
+      <div class="mb-24 project-section">
+        <h2 class="text-4xl font-bold mb-4">Barks on Broadway Re-Roof</h2>
+        <div class="w-24 h-1 bg-primaryAccent mb-8"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="gallery-item" onclick="openLightbox('../barks-on-broadway-re-roof/IMG_0304.jpg')">
+            <img src="../barks-on-broadway-re-roof/IMG_0304.jpg" alt="Barks on Broadway Re-Roof" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../barks-on-broadway-re-roof/IMG_0307.jpg')">
+            <img src="../barks-on-broadway-re-roof/IMG_0307.jpg" alt="Barks on Broadway Re-Roof" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../barks-on-broadway-re-roof/IMG_0308.jpg')">
+            <img src="../barks-on-broadway-re-roof/IMG_0308.jpg" alt="Barks on Broadway Re-Roof" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../barks-on-broadway-re-roof/IMG_0309.jpg')">
+            <img src="../barks-on-broadway-re-roof/IMG_0309.jpg" alt="Barks on Broadway Re-Roof" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../barks-on-broadway-re-roof/IMG_0310.jpg')">
+            <img src="../barks-on-broadway-re-roof/IMG_0310.jpg" alt="Barks on Broadway Re-Roof" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+        </div>
+      </div>
+
+      <!-- Ballasted TPO CHI Roof -->
+      <div class="mb-24 project-section">
+        <h2 class="text-4xl font-bold mb-4">Ballasted TPO CHI Roof</h2>
+        <div class="w-24 h-1 bg-primaryAccent mb-8"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="gallery-item" onclick="openLightbox('../ballasted-tpo-chi-roof/IMG_3754.jpg')">
+            <img src="../ballasted-tpo-chi-roof/IMG_3754.jpg" alt="Ballasted TPO CHI Roof" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../ballasted-tpo-chi-roof/IMG_3757.jpg')">
+            <img src="../ballasted-tpo-chi-roof/IMG_3757.jpg" alt="Ballasted TPO CHI Roof" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../ballasted-tpo-chi-roof/IMG_3758.jpg')">
+            <img src="../ballasted-tpo-chi-roof/IMG_3758.jpg" alt="Ballasted TPO CHI Roof" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../ballasted-tpo-chi-roof/IMG_3760.jpg')">
+            <img src="../ballasted-tpo-chi-roof/IMG_3760.jpg" alt="Ballasted TPO CHI Roof" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../ballasted-tpo-chi-roof/IMG_3761.jpg')">
+            <img src="../ballasted-tpo-chi-roof/IMG_3761.jpg" alt="Ballasted TPO CHI Roof" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+        </div>
+      </div>
+
+      <!-- Block 176 Downtown Denver -->
+      <div class="mb-24 project-section">
+        <h2 class="text-4xl font-bold mb-4">Block 176 Downtown Denver</h2>
+        <div class="w-24 h-1 bg-primaryAccent mb-8"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="gallery-item" onclick="openLightbox('../block-176-downtown-denver/IMG_6342.jpg')">
+            <img src="../block-176-downtown-denver/IMG_6342.jpg" alt="Block 176 Downtown Denver" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../block-176-downtown-denver/IMG_6346.jpg')">
+            <img src="../block-176-downtown-denver/IMG_6346.jpg" alt="Block 176 Downtown Denver" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../block-176-downtown-denver/IMG_6347.jpg')">
+            <img src="../block-176-downtown-denver/IMG_6347.jpg" alt="Block 176 Downtown Denver" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../block-176-downtown-denver/IMG_6348.jpg')">
+            <img src="../block-176-downtown-denver/IMG_6348.jpg" alt="Block 176 Downtown Denver" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../block-176-downtown-denver/IMG_6349.jpg')">
+            <img src="../block-176-downtown-denver/IMG_6349.jpg" alt="Block 176 Downtown Denver" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../block-176-downtown-denver/IMG_6351.jpg')">
+            <img src="../block-176-downtown-denver/IMG_6351.jpg" alt="Block 176 Downtown Denver" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../block-176-downtown-denver/IMG_8783.jpg')">
+            <img src="../block-176-downtown-denver/IMG_8783.jpg" alt="Block 176 Downtown Denver" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../block-176-downtown-denver/IMG_8784.jpg')">
+            <img src="../block-176-downtown-denver/IMG_8784.jpg" alt="Block 176 Downtown Denver" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../block-176-downtown-denver/IMG_8785.jpg')">
+            <img src="../block-176-downtown-denver/IMG_8785.jpg" alt="Block 176 Downtown Denver" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+        </div>
+      </div>
+
+      <!-- Cherry Creek Apartments Re-Roof -->
+      <div class="mb-24 project-section hidden-section">
+        <h2 class="text-4xl font-bold mb-4">Cherry Creek Apartments Re-Roof</h2>
+        <div class="w-24 h-1 bg-primaryAccent mb-8"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="gallery-item" onclick="openLightbox('../cherry-creek-apartments-re-roof/IMG_1283.jpg')">
+            <img src="../cherry-creek-apartments-re-roof/IMG_1283.jpg" alt="Cherry Creek Apartments Re-Roof" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../cherry-creek-apartments-re-roof/IMG_1285.jpg')">
+            <img src="../cherry-creek-apartments-re-roof/IMG_1285.jpg" alt="Cherry Creek Apartments Re-Roof" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../cherry-creek-apartments-re-roof/IMG_1286.jpg')">
+            <img src="../cherry-creek-apartments-re-roof/IMG_1286.jpg" alt="Cherry Creek Apartments Re-Roof" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../cherry-creek-apartments-re-roof/IMG_1288.jpg')">
+            <img src="../cherry-creek-apartments-re-roof/IMG_1288.jpg" alt="Cherry Creek Apartments Re-Roof" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../cherry-creek-apartments-re-roof/IMG_1289.jpg')">
+            <img src="../cherry-creek-apartments-re-roof/IMG_1289.jpg" alt="Cherry Creek Apartments Re-Roof" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../cherry-creek-apartments-re-roof/IMG_1290.jpg')">
+            <img src="../cherry-creek-apartments-re-roof/IMG_1290.jpg" alt="Cherry Creek Apartments Re-Roof" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../cherry-creek-apartments-re-roof/IMG_1291.jpg')">
+            <img src="../cherry-creek-apartments-re-roof/IMG_1291.jpg" alt="Cherry Creek Apartments Re-Roof" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+        </div>
+      </div>
+
+      <!-- Connifer Metal Roof Residential -->
+      <div class="mb-24 project-section hidden-section">
+        <h2 class="text-4xl font-bold mb-4">Connifer Metal Roof Residential</h2>
+        <div class="w-24 h-1 bg-primaryAccent mb-8"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="gallery-item" onclick="openLightbox('../connifer-metal-roof-residential/2672890887610145374.JPG')">
+            <img src="../connifer-metal-roof-residential/2672890887610145374.JPG" alt="Connifer Metal Roof Residential" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../connifer-metal-roof-residential/2694756790238201048.JPG')">
+            <img src="../connifer-metal-roof-residential/2694756790238201048.JPG" alt="Connifer Metal Roof Residential" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../connifer-metal-roof-residential/3033328770084797708 (1).JPG')">
+            <img src="../connifer-metal-roof-residential/3033328770084797708 (1).JPG" alt="Connifer Metal Roof Residential" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../connifer-metal-roof-residential/3033328770084797708.JPG')">
+            <img src="../connifer-metal-roof-residential/3033328770084797708.JPG" alt="Connifer Metal Roof Residential" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../connifer-metal-roof-residential/661861259776418823.JPG')">
+            <img src="../connifer-metal-roof-residential/661861259776418823.JPG" alt="Connifer Metal Roof Residential" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../connifer-metal-roof-residential/9170253163295050974 (1).JPG')">
+            <img src="../connifer-metal-roof-residential/9170253163295050974 (1).JPG" alt="Connifer Metal Roof Residential" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+        </div>
+      </div>
+
+      <!-- Corporate Center Golden Re-Roofs -->
+      <div class="mb-24 project-section hidden-section">
+        <h2 class="text-4xl font-bold mb-4">Corporate Center Golden Re-Roofs</h2>
+        <div class="w-24 h-1 bg-primaryAccent mb-8"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="gallery-item" onclick="openLightbox('../corporate-center-golden-re-roofs/IMG_8225.jpg')">
+            <img src="../corporate-center-golden-re-roofs/IMG_8225.jpg" alt="Corporate Center Golden Re-Roofs" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../corporate-center-golden-re-roofs/IMG_8226.jpg')">
+            <img src="../corporate-center-golden-re-roofs/IMG_8226.jpg" alt="Corporate Center Golden Re-Roofs" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../corporate-center-golden-re-roofs/IMG_8227.jpg')">
+            <img src="../corporate-center-golden-re-roofs/IMG_8227.jpg" alt="Corporate Center Golden Re-Roofs" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../corporate-center-golden-re-roofs/IMG_8228.jpg')">
+            <img src="../corporate-center-golden-re-roofs/IMG_8228.jpg" alt="Corporate Center Golden Re-Roofs" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../corporate-center-golden-re-roofs/IMG_8229.jpg')">
+            <img src="../corporate-center-golden-re-roofs/IMG_8229.jpg" alt="Corporate Center Golden Re-Roofs" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../corporate-center-golden-re-roofs/IMG_8231.jpg')">
+            <img src="../corporate-center-golden-re-roofs/IMG_8231.jpg" alt="Corporate Center Golden Re-Roofs" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../corporate-center-golden-re-roofs/IMG_8232.jpg')">
+            <img src="../corporate-center-golden-re-roofs/IMG_8232.jpg" alt="Corporate Center Golden Re-Roofs" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../corporate-center-golden-re-roofs/IMG_8233.jpg')">
+            <img src="../corporate-center-golden-re-roofs/IMG_8233.jpg" alt="Corporate Center Golden Re-Roofs" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../corporate-center-golden-re-roofs/IMG_8234.jpg')">
+            <img src="../corporate-center-golden-re-roofs/IMG_8234.jpg" alt="Corporate Center Golden Re-Roofs" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../corporate-center-golden-re-roofs/IMG_8235.jpg')">
+            <img src="../corporate-center-golden-re-roofs/IMG_8235.jpg" alt="Corporate Center Golden Re-Roofs" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../corporate-center-golden-re-roofs/IMG_8239.jpg')">
+            <img src="../corporate-center-golden-re-roofs/IMG_8239.jpg" alt="Corporate Center Golden Re-Roofs" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../corporate-center-golden-re-roofs/IMG_8240.jpg')">
+            <img src="../corporate-center-golden-re-roofs/IMG_8240.jpg" alt="Corporate Center Golden Re-Roofs" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../corporate-center-golden-re-roofs/unnamed (1).jpg')">
+            <img src="../corporate-center-golden-re-roofs/unnamed (1).jpg" alt="Corporate Center Golden Re-Roofs" class="w-full h-64 object-cover">
+          </div>
+        </div>
+      </div>
+
+      <!-- Simms New Construction -->
+      <div class="mb-24 project-section hidden-section">
+        <h2 class="text-4xl font-bold mb-4">Simms New Construction</h2>
+        <div class="w-24 h-1 bg-primaryAccent mb-8"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="gallery-item" onclick="openLightbox('../simms-new-construction/IMG_0643.jpg')">
+            <img src="../simms-new-construction/IMG_0643.jpg" alt="Simms New Construction" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../simms-new-construction/IMG_0645.jpg')">
+            <img src="../simms-new-construction/IMG_0645.jpg" alt="Simms New Construction" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../simms-new-construction/IMG_0646.jpg')">
+            <img src="../simms-new-construction/IMG_0646.jpg" alt="Simms New Construction" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../simms-new-construction/IMG_0647.jpg')">
+            <img src="../simms-new-construction/IMG_0647.jpg" alt="Simms New Construction" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../simms-new-construction/IMG_0648.jpg')">
+            <img src="../simms-new-construction/IMG_0648.jpg" alt="Simms New Construction" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../simms-new-construction/IMG_8760.jpg')">
+            <img src="../simms-new-construction/IMG_8760.jpg" alt="Simms New Construction" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../simms-new-construction/IMG_8761.jpg')">
+            <img src="../simms-new-construction/IMG_8761.jpg" alt="Simms New Construction" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../simms-new-construction/IMG_8762.jpg')">
+            <img src="../simms-new-construction/IMG_8762.jpg" alt="Simms New Construction" class="w-full h-64 object-cover">
+          </div>
+        </div>
+      </div>
+
+      <!-- United Airlines -->
+      <div class="mb-24 project-section hidden-section">
+        <h2 class="text-4xl font-bold mb-4">United Airlines</h2>
+        <div class="w-24 h-1 bg-primaryAccent mb-8"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1381.jpg')">
+            <img src="../united-airlines/IMG_1381.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1382.jpg')">
+            <img src="../united-airlines/IMG_1382.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1383.jpg')">
+            <img src="../united-airlines/IMG_1383.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1586.jpg')">
+            <img src="../united-airlines/IMG_1586.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1587.jpg')">
+            <img src="../united-airlines/IMG_1587.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1588.jpg')">
+            <img src="../united-airlines/IMG_1588.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1589.jpg')">
+            <img src="../united-airlines/IMG_1589.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1590.jpg')">
+            <img src="../united-airlines/IMG_1590.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1591.jpg')">
+            <img src="../united-airlines/IMG_1591.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1744.jpg')">
+            <img src="../united-airlines/IMG_1744.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1746.jpg')">
+            <img src="../united-airlines/IMG_1746.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1747.jpg')">
+            <img src="../united-airlines/IMG_1747.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1748.jpg')">
+            <img src="../united-airlines/IMG_1748.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1751.jpg')">
+            <img src="../united-airlines/IMG_1751.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1753.jpg')">
+            <img src="../united-airlines/IMG_1753.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1755.jpg')">
+            <img src="../united-airlines/IMG_1755.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1757.jpg')">
+            <img src="../united-airlines/IMG_1757.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1823.jpg')">
+            <img src="../united-airlines/IMG_1823.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1824.jpg')">
+            <img src="../united-airlines/IMG_1824.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1825.jpg')">
+            <img src="../united-airlines/IMG_1825.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1829.jpg')">
+            <img src="../united-airlines/IMG_1829.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1833.jpg')">
+            <img src="../united-airlines/IMG_1833.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1835.jpg')">
+            <img src="../united-airlines/IMG_1835.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_1837.jpg')">
+            <img src="../united-airlines/IMG_1837.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_8440.jpg')">
+            <img src="../united-airlines/IMG_8440.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_8442.jpg')">
+            <img src="../united-airlines/IMG_8442.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../united-airlines/IMG_8443.jpg')">
+            <img src="../united-airlines/IMG_8443.jpg" alt="United Airlines" class="w-full h-64 object-cover">
+          </div>
+        </div>
+      </div>
+
+      <!-- Dover -->
+      <div class="mb-24 project-section hidden-section">
+        <h2 class="text-4xl font-bold mb-4">Dover</h2>
+        <div class="w-24 h-1 bg-primaryAccent mb-8"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="gallery-item" onclick="openLightbox('../Dover/IMG_7206.jpg')">
+            <img src="../Dover/IMG_7206.jpg" alt="Dover" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../Dover/IMG_7207.jpg')">
+            <img src="../Dover/IMG_7207.jpg" alt="Dover" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../Dover/IMG_7229.jpg')">
+            <img src="../Dover/IMG_7229.jpg" alt="Dover" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../Dover/IMG_7230.jpg')">
+            <img src="../Dover/IMG_7230.jpg" alt="Dover" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../Dover/IMG_7233.jpg')">
+            <img src="../Dover/IMG_7233.jpg" alt="Dover" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../Dover/IMG_7234.jpg')">
+            <img src="../Dover/IMG_7234.jpg" alt="Dover" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../Dover/IMG_7236.jpg')">
+            <img src="../Dover/IMG_7236.jpg" alt="Dover" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+          <div class="gallery-item" onclick="openLightbox('../Dover/IMG_7398.jpg')">
+            <img src="../Dover/IMG_7398.jpg" alt="Dover" class="w-full h-64 object-cover" loading="lazy" width="400" height="256">
+          </div>
+        </div>
+      </div>
+
+      <!-- Load More Button -->
+      <div id="load-more-container" class="text-center mb-12">
+        <button id="load-more-btn" class="bg-black text-white px-8 py-4 rounded-full font-bold hover:bg-gray-800 transition-all inline-flex items-center gap-2">
+          <span>Load More Projects</span>
+          <i data-lucide="chevron-down" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 bg-black text-white">
+    <div class="container mx-auto px-6 text-center">
+      <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Start Your Project?</h2>
+      <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+        Let's discuss how we can bring the same quality and expertise to your roofing needs
+      </p>
+      <a href="../contact/" class="bg-primaryAccent hover:bg-primaryAccentHover text-black px-8 py-4 rounded-full font-bold text-lg transition-all inline-block">
+        Get Your Free Quote
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-black text-white py-16">
+    <div class="container mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <!-- Company Info -->
+        <div class="md:col-span-1">
+          <img src="../images/ZMAC NO BG.png" alt="ZMAC Construction" class="h-16 mb-4">
+          <p class="text-gray-400 text-sm">
+            Colorado's trusted roofing experts since 2010
+          </p>
+        </div>
+
+        <!-- Services -->
+        <div>
+          <h4 class="font-bold mb-4 text-primaryAccent">Services</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="../commercial-roofing/" class="hover:text-white transition-colors">Commercial Roofing</a></li>
+            <li><a href="../residential-roofing/" class="hover:text-white transition-colors">Residential Roofing</a></li>
+            <li><a href="../storm-damage/" class="hover:text-white transition-colors">Storm Damage</a></li>
+            <li><a href="../roofing-systems/" class="hover:text-white transition-colors">Roofing Systems</a></li>
+          </ul>
+        </div>
+
+        <!-- Company -->
+        <div>
+          <h4 class="font-bold mb-4 text-primaryAccent">Company</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="../about/" class="hover:text-white transition-colors">About Us</a></li>
+            <li><a href="../gallery/" class="hover:text-white transition-colors">Gallery</a></li>
+            <li><a href="../testimonials/" class="hover:text-white transition-colors">Testimonials</a></li>
+            <li><a href="../contact/" class="hover:text-white transition-colors">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <h4 class="font-bold mb-4 text-primaryAccent">Contact</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li>Phone: (720) 555-0123</li>
+            <li>Email: info@zmacconstruction.com</li>
+            <li>Denver, Colorado</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 text-sm mb-4 md:mb-0">
+          © 2024 ZMAC Construction. All rights reserved.
+        </p>
+        <div class="flex space-x-6 text-sm text-gray-400">
+          <a href="../privacy-policy/" class="hover:text-white transition-colors">Privacy Policy</a>
+          <a href="../terms/" class="hover:text-white transition-colors">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="Gallery Image">
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Add lazy loading to all images that don't have it
+    document.addEventListener('DOMContentLoaded', () => {
+      const allImages = document.querySelectorAll('img');
+      allImages.forEach(img => {
+        if (!img.hasAttribute('loading')) {
+          img.setAttribute('loading', 'lazy');
+        }
+        if (!img.hasAttribute('width')) {
+          img.setAttribute('width', '400');
+          img.setAttribute('height', '256');
+        }
+      });
+    });
+
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('translate-x-full');
+    });
+
+    // Close mobile menu when clicking a link
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('translate-x-full');
+      });
+    });
+
+    // Lightbox functions
+    function openLightbox(src) {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      lightboxImg.src = src;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      const lightbox = document.getElementById('lightbox');
+      lightbox.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Close lightbox on ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeLightbox();
+      }
+    });
+
+    // Header scroll effect
+    const header = document.querySelector('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        header.classList.add('bg-black');
+        header.classList.remove('bg-transparent');
+      } else {
+        header.classList.add('bg-transparent');
+        header.classList.remove('bg-black');
+      }
+    });
+
+    // Load More Projects functionality
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    const loadMoreContainer = document.getElementById('load-more-container');
+    const hiddenSections = document.querySelectorAll('.hidden-section');
+    let sectionsLoaded = 0;
+    const sectionsPerLoad = 2;
+
+    if (loadMoreBtn) {
+      loadMoreBtn.addEventListener('click', () => {
+        const start = sectionsLoaded;
+        const end = Math.min(sectionsLoaded + sectionsPerLoad, hiddenSections.length);
+        
+        for (let i = start; i < end; i++) {
+          hiddenSections[i].classList.remove('hidden-section');
+          hiddenSections[i].style.display = 'block';
+        }
+        
+        sectionsLoaded = end;
+        
+        // Hide button if all sections are loaded
+        if (sectionsLoaded >= hiddenSections.length) {
+          loadMoreContainer.style.display = 'none';
+        }
+        
+        // Re-initialize Lucide icons for dynamically shown content
+        lucide.createIcons();
+        
+        // Smooth scroll to newly loaded content
+        setTimeout(() => {
+          hiddenSections[start].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
+      });
+    }
+  </script>
+</body>
+
+</html>
