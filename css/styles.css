@@ -46,58 +46,6 @@ h6 {
     opacity: 1;
   }
 }
-
-@keyframes slide-up {
-  from {
-    transform: translateY(50px);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slide-right {
-  from {
-    transform: translateX(-50px);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slide-left {
-  from {
-    transform: translateX(50px);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes pulse-slow {
-
-  0%,
-  100% {
-    background-color: #FFD700;
-  }
-
-  50% {
-    background-color: #F2CC00;
-  }
-}
-
-@keyframes float {
-
-  0%,
   100% {
     transform: translateY(0px);
   }
