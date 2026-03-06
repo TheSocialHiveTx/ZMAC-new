@@ -127,6 +127,73 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ---- Testimonial Carousel ----
+    const testimonialCarousel = document.getElementById('testimonial-carousel');
+    if (testimonialCarousel) {
+        const track = document.getElementById('testimonial-track');
+        const prevBtn = document.getElementById('prev-testimonial');
+        const nextBtn = document.getElementById('next-testimonial');
+        const dotsContainer = document.getElementById('carousel-dots');
+        
+        if (track && prevBtn && nextBtn && dotsContainer) {
+            const slides = track.children;
+            let currentIndex = 0;
+            const totalSlides = slides.length;
+
+            // Create dots
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('button');
+                dot.className = 'w-2 h-2 rounded-full transition-all';
+                dot.setAttribute('aria-label', `Go to testimonial ${i + 1}`);
+                if (i === 0) {
+                    dot.classList.add('bg-primaryAccent', 'w-8');
+                } else {
+                    dot.classList.add('bg-white/30');
+                }
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            }
+
+            const dots = dotsContainer.children;
+
+            function updateCarousel() {
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                // Update dots
+                Array.from(dots).forEach((dot, index) => {
+                    if (index === currentIndex) {
+                        dot.classList.add('bg-primaryAccent', 'w-8');
+                        dot.classList.remove('bg-white/30');
+                    } else {
+                        dot.classList.remove('bg-primaryAccent', 'w-8');
+                        dot.classList.add('bg-white/30');
+                    }
+                });
+            }
+
+            function goToSlide(index) {
+                currentIndex = index;
+                updateCarousel();
+            }
+
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % totalSlides;
+                updateCarousel();
+            }
+
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                updateCarousel();
+            }
+
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+
+            // Auto-advance every 5 seconds
+            setInterval(nextSlide, 5000);
+        }
+    }
+
     // ---- Lucide Icons ----
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
